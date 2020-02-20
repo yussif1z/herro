@@ -5,19 +5,54 @@ import auth from '../../firebase'
 
 export default class MenuBar extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            isAuth: false
+        }
+    }
+
+    componentDidMount() {
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                this.setState({
+                    isAuth: true
+                })
+            } else if (!user) {
+                this.setState({
+                    isAuth: false
+                })
+            }
+        })
+    }
+
     logout = e => {
         e.preventDefault()
         auth.signOut().then(response => {
             this.setState({
-                currentUser: null
+                isAuth: false
             })
         })
     }
 
     render() {
-        return (
-            <Menu>
+        const { isAuth } = this.state
 
+        if (isAuth) {
+            return (
+                <Menu>
+
+                    <Menu.Item>
+                        <Button onClick={this.logout}>Logout</Button>
+                    </Menu.Item>
+
+                </Menu>
+            );
+        }
+
+        return (
+
+            <Menu>
                 <Menu.Item>
                     <Link to='/register'>
                         <Button primary>Sign up</Button>
@@ -29,12 +64,8 @@ export default class MenuBar extends Component {
                         <Button>Log-in</Button>
                     </Link>
                 </Menu.Item>
-
-                <Menu.Item>
-                    <Button onClick={this.logout}>Logout</Button>
-                </Menu.Item>
-
             </Menu>
+
         );
     }
 }
