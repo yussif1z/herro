@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {
   Responsive,
   Container,
@@ -7,9 +7,19 @@ import {
   Button,
   Form,
   Grid
-} from 'semantic-ui-react';
+} from 'semantic-ui-react'
+import auth from '../../firebase'
 
 export default class Register extends Component {
+
+  componentDidMount() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        this.props.history.push('/')
+      }
+    })
+  }
+
   render() {
     return (
       <Responsive>

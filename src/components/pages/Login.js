@@ -25,9 +25,7 @@ export default class Login extends Component {
     componentDidMount() {
         auth.onAuthStateChanged(user => {
             if (user) {
-                this.setState({
-                    currentUser: user
-                })
+                this.props.history.push('/')
             }
         })
     }
@@ -48,6 +46,7 @@ export default class Login extends Component {
                 this.setState({
                     currentUser: response.user
                 })
+                this.props.history.push('/')
             })
             .catch(error => {
                 this.setState({
@@ -59,10 +58,6 @@ export default class Login extends Component {
     render() {
 
         const { message, currentUser } = this.state
-
-        if (currentUser) {
-            this.props.history.push('/register');
-        }
 
         return (
             <Responsive>
