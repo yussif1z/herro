@@ -72,12 +72,16 @@ export default class Register extends Component {
   }
 
   render() {
+
+    const { message } = this.state
+
     return (
       <Responsive>
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={7} computer={6}>
-              <h4 className="text-center mb-4"><div>Sign up</div></h4>
+              <h4 className="text-center mb-4"><div>Sign up</div></h4> 
+              {message ? <p className="help is-danger">{message}</p> : null}
               <Form onSubmit={this.onSubmit}>
 
                 <Form.Field>
