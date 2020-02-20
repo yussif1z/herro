@@ -48,18 +48,21 @@ export default class Register extends Component {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((response) => {
-        db.collection('users')
+        return db.collection('users')
           .doc(response.user.uid)
-            .set({
-              firstname: firstname,
-              lastname: lastname,
-              birth: birth
-            })
+          .set({
+            firstname: firstname,
+            lastname: lastname,
+            birth: birth
+          })
       })
-      .then((response) => {
-        firebase.auth.signOut().then(response => {
-          this.props.history.push('/login')
-        })
+      .then(() => {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            this.props.history.push('/login')
+          })
       })
       .catch(error => {
         this.setState({
