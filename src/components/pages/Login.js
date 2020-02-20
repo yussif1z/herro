@@ -57,7 +57,7 @@ export default class Login extends Component {
 
     render() {
 
-        const { message, currentUser } = this.state
+        const { message } = this.state
 
         return (
             <Responsive>
