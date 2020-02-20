@@ -12,6 +12,19 @@ import auth from '../../firebase'
 
 export default class Register extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      email: '',
+      password: '',
+      confirmpassword: '',
+      firstname: '',
+      lastname: '',
+      birth: '',
+      message: ''
+    }
+  }
+
   componentDidMount() {
     auth.onAuthStateChanged(user => {
       if (user) {
@@ -20,63 +33,80 @@ export default class Register extends Component {
     })
   }
 
+  onChange = e => {
+    const { name, value } = e.target
+    this.setState({
+      [name]: value
+    })
+  }
+
+  onSubmit = e => {
+    e.preventDefault()
+    const { email, password } = this.state
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(response => {
+        auth.signOut().then(response => {
+          this.props.history.push('/login')
+        })
+      })
+      .catch(error => {
+        this.setState({
+          message: error.message
+        })
+      })
+  }
+
   render() {
     return (
       <Responsive>
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={7} computer={6}>
-              <h4 className="text-center mb-4"><div>Sign in</div></h4>
-              <Form>
+              <h4 className="text-center mb-4"><div>Sign up</div></h4>
+              <Form onSubmit={this.onSubmit}>
 
                 <Form.Field>
-                  <Input fluid iconPosition='left' placeholder='username'>
-                    <Icon name='user' />
-                    <input type="text" />
+                  <Input fluid iconPosition='left' placeholder='email'>
+                    <Icon name='mail' />
+                    <input type="email" name='email' onChange={this.onChange} />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='password'>
-                    <Icon name='lock' />
-                    <input type="password" />
+                    <Icon name='unlock' />
+                    <input type="password" name='password' onChange={this.onChange} />
                   </Input>
                 </Form.Field>
 
-                <Form.Field>
+                {/* <Form.Field>
                   <Input fluid iconPosition='left' placeholder='confirm password'>
-                    <Icon name='lock' />
-                    <input type="text" />
+                    <Icon name='unlock alternate' />
+                    <input type="password" />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='first name'>
-                    <Icon name='lock' />
-                    <input type="password" />
+                    <Icon name='vcard' />
+                    <input type="text" />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='last name'>
-                    <Icon name='lock' />
-                    <input type="password" />
+                    <Icon name='vcard' />
+                    <input type="text" />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='birth'>
-                    <Icon name='lock' />
-                    <input type="password" />
+                    <Icon name='calendar alternate' />
+                    <input type="text" />
                   </Input>
-                </Form.Field>
-
-                <Form.Field>
-                  <Input fluid iconPosition='left' placeholder='email'>
-                    <Icon name='lock' />
-                    <input type="password" />
-                  </Input>
-                </Form.Field>
+                </Form.Field> */}
 
                 <div>
                   <Button color='yellow' animated>
