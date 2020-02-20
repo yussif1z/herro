@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import auth from '../../firebase'
+import firebase from '../../firebase'
 
 export default class MenuBar extends Component {
 
@@ -13,7 +13,7 @@ export default class MenuBar extends Component {
     }
 
     componentDidMount() {
-        auth.onAuthStateChanged(user => {
+        firebase.auth.onAuthStateChanged(user => {
             if (user) {
                 this.setState({
                     isAuth: true
@@ -28,7 +28,7 @@ export default class MenuBar extends Component {
 
     logout = e => {
         e.preventDefault()
-        auth.signOut().then(response => {
+        firebase.auth.signOut().then(response => {
             this.setState({
                 isAuth: false
             })

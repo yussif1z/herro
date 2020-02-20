@@ -8,7 +8,7 @@ import {
     Form,
     Grid
 } from 'semantic-ui-react'
-import auth from '../../firebase'
+import firebase from '../../firebase'
 
 export default class Login extends Component {
 
@@ -23,7 +23,7 @@ export default class Login extends Component {
     }
 
     componentDidMount() {
-        auth.onAuthStateChanged(user => {
+        firebase.auth.onAuthStateChanged(user => {
             if (user) {
                 this.props.history.push('/')
             }
@@ -40,7 +40,7 @@ export default class Login extends Component {
     onSubmit = e => {
         e.preventDefault()
         const { email, password } = this.state
-        auth
+        firebase.auth
             .signInWithEmailAndPassword(email, password)
             .then(response => {
                 this.setState({
