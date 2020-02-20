@@ -13,7 +13,7 @@ export default class MenuBar extends Component {
     }
 
     componentDidMount() {
-        firebase.auth.onAuthStateChanged(user => {
+        firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.setState({
                     isAuth: true
@@ -28,7 +28,7 @@ export default class MenuBar extends Component {
 
     logout = e => {
         e.preventDefault()
-        firebase.auth.signOut().then(response => {
+        firebase.auth().signOut().then(response => {
             this.setState({
                 isAuth: false
             })

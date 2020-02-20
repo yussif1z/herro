@@ -26,7 +26,7 @@ export default class Register extends Component {
   }
 
   componentDidMount() {
-    firebase.auth.onAuthStateChanged(user => {
+    firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.history.push('/')
       }
@@ -42,9 +42,20 @@ export default class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault()
-    const { email, password } = this.state
-    firebase.auth
+    const { email, password, firstname, lastname, birth } = this.state
+    const db = firebase.firestore();
+    firebase
+      .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then((response) => {
+        db.collection('users')
+          .doc(response.user.uid)
+            .set({
+              firstname: firstname,
+              lastname: lastname,
+              birth: birth
+            })
+      })
       .then((response) => {
         firebase.auth.signOut().then(response => {
           this.props.history.push('/login')
@@ -80,33 +91,33 @@ export default class Register extends Component {
                   </Input>
                 </Form.Field>
 
-                {/* <Form.Field>
+                <Form.Field>
                   <Input fluid iconPosition='left' placeholder='confirm password'>
                     <Icon name='unlock alternate' />
-                    <input type="password" />
+                    <input type="password" name='confirmpassword' onChange={this.onChange} />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='first name'>
                     <Icon name='vcard' />
-                    <input type="text" />
+                    <input type="text" name='firstname' onChange={this.onChange} />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='last name'>
                     <Icon name='vcard' />
-                    <input type="text" />
+                    <input type="text" name='lastname' onChange={this.onChange} />
                   </Input>
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='birth'>
                     <Icon name='calendar alternate' />
-                    <input type="text" />
+                    <input type="text" name='birth' onChange={this.onChange} />
                   </Input>
-                </Form.Field> */}
+                </Form.Field>
 
                 <div>
                   <Button color='yellow' animated>
