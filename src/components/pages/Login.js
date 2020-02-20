@@ -23,7 +23,7 @@ export default class Login extends Component {
     }
 
     componentDidMount() {
-        firebase.auth.onAuthStateChanged(user => {
+        firebase.auth().onAuthStateChanged(user => {
             if (user) {
                 this.props.history.push('/')
             }
@@ -40,7 +40,8 @@ export default class Login extends Component {
     onSubmit = e => {
         e.preventDefault()
         const { email, password } = this.state
-        firebase.auth
+        firebase
+            .auth()
             .signInWithEmailAndPassword(email, password)
             .then(response => {
                 this.setState({
