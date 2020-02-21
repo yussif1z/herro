@@ -3,7 +3,7 @@ import { Card, Grid, Button } from 'semantic-ui-react'
 import firebase from '../../firebase'
 import MapContainer from '../map/MapContainer'
 
-export default class Book extends Component {
+export default class Booking extends Component {
 
     constructor(props) {
         super(props)

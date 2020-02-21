@@ -43,7 +43,7 @@ export default class HotelCard extends Component {
                 <Grid.Column mobile={16} tablet={6} computer={6}>
                     {this.state.hotels.map(hotel => {
                         return (
-                            <Link to={`/book/${hotel.id}`}>
+                            <Link to={`/booking/${hotel.id}`}>
                                 <Card link className='bg-transparent shadow-none' fluid>
                                     {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
                                     <Card.Header textAlign='left'>
