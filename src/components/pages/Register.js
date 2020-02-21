@@ -23,6 +23,7 @@ export default class Register extends Component {
       birth: '',
       message: ''
     }
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
