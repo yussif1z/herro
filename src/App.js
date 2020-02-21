@@ -5,7 +5,7 @@ import MenuBar from './components/menu/MenuBar'
 import Home from './components/pages/Home'
 import Login from './components/pages/Login'
 import Register from './components/pages/Register'
-import Book from './components/pages/Book'
+import Booking from './components/pages/Booking'
 import MyBooking from './components/pages/MyBooking'
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route exact path="/book/:id" component={Book} />
+          <Route exact path="/booking/:id" component={Booking} />
           <Route exact path="/mybooking" component={MyBooking} />
         </Switch>
       </Router>
