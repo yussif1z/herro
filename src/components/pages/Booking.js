@@ -8,6 +8,7 @@ export default class Booking extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            hotelid: '',
             name: '',
             price: '',
             detail: '',
@@ -16,20 +17,22 @@ export default class Booking extends Component {
                 lng: ''
             }
         }
+        this.onBooking = this.onBooking.bind(this);
     }
 
     componentDidMount() {
-        const id = this.props.match.params.id
+        const hotelid = this.props.match.params.id
         firebase
             .firestore()
             .collection('hotels')
-            .doc(id)
+            .doc(hotelid)
             .get()
             .then(doc => {
                 if (!doc.exists) {
                     console.log('No such document!')
                 } else {
                     this.setState({
+                        hotelid: doc.id,
                         name: doc.data().name,
                         price: doc.data().price,
                         detail: doc.data().detail,
@@ -39,7 +42,29 @@ export default class Booking extends Component {
             })
             .catch(err => {
                 console.log('Error getting document', err)
-            });
+            })
+    }
+
+    onBooking() {
+        const { hotelid } = this.state
+        const db = firebase.firestore()
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                db.collection('users')
+                    .doc(user.uid)
+                    .collection('mybooking')
+                    .add({
+                        hotelid: hotelid,
+                    })
+                    .catch(error => {
+                        this.setState({
+                            message: error.message
+                        })
+                    })
+            } else if (!user) {
+                this.props.history.push('/login')
+            }
+        })
     }
 
     render() {
@@ -56,12 +81,10 @@ export default class Booking extends Component {
                         <Card.Description textAlign='center'>
                             {this.state.detail}
                         </Card.Description>
-                        <Card.Content extra>
-                            <div className='ui two buttons'>
-                                <Button basic color='green'>
-                                    Book
-                                </Button>
-                            </div>
+                        <Card.Content textAlign='right' extra>
+                            <Button onClick={this.onBooking} basic color='green'>
+                                Booking
+                            </Button>
                         </Card.Content>
                     </Card>
                 </Grid.Column>
