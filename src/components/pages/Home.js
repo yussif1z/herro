@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Icon, Image, Grid } from 'semantic-ui-react'
+import { Card, Grid } from 'semantic-ui-react'
 import firebase from '../../firebase'
 
 export default class HotelCard extends Component {
@@ -43,17 +43,17 @@ export default class HotelCard extends Component {
                         return (
                             <Card link className='bg-transparent shadow-none' fluid>
                                 {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
-                                <Card.Description textAlign='left'>
+                                <Card.Header textAlign='left'>
                                     <h5>
                                         {hotel.name}
                                     </h5>
-                                </Card.Description>
-                                <Card.Description textAlign='left'>
-                                    {hotel.price}
-                                </Card.Description>
+                                </Card.Header>
                                 <Card.Description textAlign='left'>
                                     {hotel.detail}
                                 </Card.Description>
+                                <Card.Meta textAlign='left'>
+                                    {hotel.price}
+                                </Card.Meta>
                                 <Card.Description textAlign='left'>
                                     {hotel.latitude}
                                 </Card.Description>
