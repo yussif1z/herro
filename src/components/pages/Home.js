@@ -21,7 +21,7 @@ export default class HotelCard extends Component {
                 const hotels = []
                 querySnapshot.forEach(doc => {
                     hotels.push({
-                        id: doc.id,
+                        hotelid: doc.id,
                         name: doc.data().name,
                         price: doc.data().price,
                         detail: doc.data().detail,
@@ -43,7 +43,7 @@ export default class HotelCard extends Component {
                 <Grid.Column mobile={16} tablet={6} computer={6}>
                     {this.state.hotels.map(hotel => {
                         return (
-                            <Link to={`/booking/${hotel.id}`}>
+                            <Link to={`/booking/${hotel.hotelid}`}>
                                 <Card link className='bg-transparent shadow-none' fluid>
                                     {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
                                     <Card.Header textAlign='left'>
