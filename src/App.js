@@ -6,6 +6,7 @@ import Home from './components/pages/Home'
 import Login from './components/pages/Login'
 import Register from './components/pages/Register'
 import Book from './components/pages/Book'
+import MyBooking from './components/pages/MyBooking'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
           <Route exact path="/book/:id" component={Book} />
+          <Route exact path="/mybooking" component={MyBooking} />
         </Switch>
       </Router>
     </div>

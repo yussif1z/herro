@@ -46,6 +46,12 @@ export default class MenuBar extends Component {
                         <Button onClick={this.logout}>Logout</Button>
                     </Menu.Item>
 
+                    <Menu.Item>
+                        <Link to='/mybooking'>
+                            <Button primary>My Booking</Button>
+                        </Link>
+                    </Menu.Item>
+
                 </Menu>
             );
         }
