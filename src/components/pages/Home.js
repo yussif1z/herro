@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Card, Grid } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
 export default class HotelCard extends Component {
@@ -20,6 +21,7 @@ export default class HotelCard extends Component {
                 const hotels = []
                 querySnapshot.forEach(doc => {
                     hotels.push({
+                        id: doc.id,
                         name: doc.data().name,
                         price: doc.data().price,
                         detail: doc.data().detail,
@@ -41,26 +43,28 @@ export default class HotelCard extends Component {
                 <Grid.Column mobile={16} tablet={6} computer={6}>
                     {this.state.hotels.map(hotel => {
                         return (
-                            <Card link className='bg-transparent shadow-none' fluid>
-                                {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
-                                <Card.Header textAlign='left'>
-                                    <h5>
-                                        {hotel.name}
-                                    </h5>
-                                </Card.Header>
-                                <Card.Description textAlign='left'>
-                                    {hotel.detail}
-                                </Card.Description>
-                                <Card.Meta textAlign='left'>
-                                    {hotel.price}
-                                </Card.Meta>
-                                <Card.Description textAlign='left'>
-                                    {hotel.latitude}
-                                </Card.Description>
-                                <Card.Description textAlign='left'>
-                                    {hotel.longitude}
-                                </Card.Description>
-                            </Card>
+                            <Link to={`/book/${hotel.id}`}>
+                                <Card link className='bg-transparent shadow-none' fluid>
+                                    {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
+                                    <Card.Header textAlign='left'>
+                                        <h5>
+                                            {hotel.name}
+                                        </h5>
+                                    </Card.Header>
+                                    <Card.Description textAlign='left'>
+                                        {hotel.detail}
+                                    </Card.Description>
+                                    <Card.Meta textAlign='left'>
+                                        {hotel.price}
+                                    </Card.Meta>
+                                    <Card.Description textAlign='left'>
+                                        {hotel.latitude}
+                                    </Card.Description>
+                                    <Card.Description textAlign='left'>
+                                        {hotel.longitude}
+                                    </Card.Description>
+                                </Card>
+                            </Link>
                         );
                     })}
                 </Grid.Column>
