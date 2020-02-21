@@ -1,10 +1,11 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './App.css'
+import MenuBar from './components/menu/MenuBar'
+import Home from './components/pages/Home'
 import Login from './components/pages/Login'
 import Register from './components/pages/Register'
-import Home from './components/pages/Home'
-import MenuBar from './components/menu/MenuBar'
+import Book from './components/pages/Book'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/book" component={Book} />
         </Switch>
       </Router>
     </div>
