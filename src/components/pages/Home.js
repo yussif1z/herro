@@ -8,14 +8,6 @@ export default class HotelCard extends Component {
         super(props)
         this.state = {
             hotels: []
-            // name: '',
-            // price: '',
-            // detail: '',
-            // pictureurl: '',
-            // location: {
-            //     latitude: '',
-            //     longitude: ''
-            // }
         }
     }
 
@@ -39,42 +31,38 @@ export default class HotelCard extends Component {
                 this.setState({ hotels })
             })
             .catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
+                console.log("Error getting documents: ", error)
+            })
     }
 
     render() {
         return (
-            // <Card link className='bg-transparent shadow-none' fluid>
-            //     {/* <Image circular wrapped /> */}
-            //     <Card.Description textAlign='left'>
-            //         <h5>
-            //             name
-            //         </h5>
-            //     </Card.Description>
-            //     <Card.Description textAlign='left'>
-            //         กรุงเทพมหานคร
-            //     </Card.Description>
-            //     <Card.Description textAlign='left'>
-            //         120/hour
-            //     </Card.Description>
-            // </Card>
             <Grid textAlign='center'>
                 <Grid.Column mobile={16} tablet={6} computer={6}>
-                    <div>
-                        {this.state.hotels.map(v => {
-                            return (
-                                <p>
-                                    name: {v.name},
-                  price: {v.price},
-                  detail: {v.detail},
-                  pictureurl: {v.pictureurl}
-                                    latitude: {v.latitude}
-                                    longitude: {v.longitude}
-                                </p>
-                            );
-                        })}
-                    </div>
+                    {this.state.hotels.map(hotel => {
+                        return (
+                            <Card link className='bg-transparent shadow-none' fluid>
+                                {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
+                                <Card.Description textAlign='left'>
+                                    <h5>
+                                        {hotel.name}
+                                    </h5>
+                                </Card.Description>
+                                <Card.Description textAlign='left'>
+                                    {hotel.price}
+                                </Card.Description>
+                                <Card.Description textAlign='left'>
+                                    {hotel.detail}
+                                </Card.Description>
+                                <Card.Description textAlign='left'>
+                                    {hotel.latitude}
+                                </Card.Description>
+                                <Card.Description textAlign='left'>
+                                    {hotel.longitude}
+                                </Card.Description>
+                            </Card>
+                        );
+                    })}
                 </Grid.Column>
             </Grid>
         );
