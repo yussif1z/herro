@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Menu } from 'semantic-ui-react'
+import { Button, Menu, Image, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
@@ -40,52 +40,48 @@ export default class MenuBar extends Component {
 
         if (isAuth) {
             return (
-                <Menu>
-
-                    <Menu.Item>
-                        <Link to='/'>
-                            <Button primary>Home</Button>
-                        </Link>
+                <Menu size='tiny'>
+                    <Menu.Item href='/' link>
+                        <Image src={require('../imgs/hotel.png')} size='mini' />
                     </Menu.Item>
-
-                    <Menu.Item>
-                        <Button onClick={this.logout}>Logout</Button>
+                    <Menu.Item href='/' link>
+                        <Header size='small'>Discover</Header>
                     </Menu.Item>
-
-                    <Menu.Item>
-                        <Link to='/mybooking'>
-                            <Button primary>My Booking</Button>
-                        </Link>
-                    </Menu.Item>
-
+                    <Menu.Menu position='right'>
+                        <Menu.Item>
+                            <Link to='/mybooking'>
+                                <Button>My Booking</Button>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item onClick={this.logout} link>
+                            <Header size='small'>Logout</Header>
+                        </Menu.Item>
+                    </Menu.Menu>
                 </Menu>
             );
         }
 
         return (
-
-            <Menu>
-
-                <Menu.Item>
-                    <Link to='/'>
-                        <Button primary>Home</Button>
-                    </Link>
+            <Menu size='tiny'>
+                <Menu.Item href='/' link>
+                    <Image src={require('../imgs/hotel.png')} size='mini' />
                 </Menu.Item>
-
-                <Menu.Item>
-                    <Link to='/register'>
-                        <Button primary>Sign up</Button>
-                    </Link>
+                <Menu.Item href='/' link>
+                    <Header size='small'>Discover</Header>
                 </Menu.Item>
-
-                <Menu.Item>
-                    <Link to='/login'>
-                        <Button>Log-in</Button>
-                    </Link>
-                </Menu.Item>
-
+                <Menu.Menu position='right'>
+                    <Menu.Item>
+                        <Link to='/login'>
+                            <Button>Sign In</Button>
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Link to='/register'>
+                            <Button primary>Create Account</Button>
+                        </Link>
+                    </Menu.Item>
+                </Menu.Menu>
             </Menu>
-
         );
     }
 }
