@@ -7,7 +7,8 @@ import {
     Icon,
     Input,
     Transition,
-    Label
+    Label,
+    Image
 } from 'semantic-ui-react'
 import moment from 'moment'
 import firebase from '../../firebase'
@@ -23,6 +24,7 @@ export default class Booking extends Component {
             name: '',
             price: '',
             detail: '',
+            pictureurl: '',
             location: {
                 lat: '',
                 lng: ''
@@ -60,13 +62,30 @@ export default class Booking extends Component {
                 if (!doc.exists) {
                     console.log('No such document!')
                 } else {
-                    this.setState({
-                        hotelid: doc.id,
-                        name: doc.data().name,
-                        price: doc.data().price,
-                        detail: doc.data().detail,
-                        location: doc.data().location
-                    })
+                    firebase
+                        .storage()
+                        .refFromURL(doc.data().pictureurl)
+                        .getDownloadURL()
+                        .then(downloadURL => {
+                            this.setState({
+                                hotelid: doc.id,
+                                name: doc.data().name,
+                                price: doc.data().price,
+                                detail: doc.data().detail,
+                                pictureurl: downloadURL,
+                                location: doc.data().location
+                            })
+                        })
+                        .catch(function (error) {
+                            console.log("Error getting documents: ", error)
+                        })
+                    // this.setState({
+                    //     hotelid: doc.id,
+                    //     name: doc.data().name,
+                    //     price: doc.data().price,
+                    //     detail: doc.data().detail,
+                    //     location: doc.data().location
+                    // })
                 }
             })
             .catch(err => {
@@ -136,6 +155,7 @@ export default class Booking extends Component {
             <Grid centered>
                 <Grid.Column mobile={15} tablet={9} computer={9}>
                     <Card fluid>
+                        <Image src={this.state.pictureurl} circular wrapped />
                         <Card.Header textAlign='center'>
                             {this.state.name}
                         </Card.Header>
