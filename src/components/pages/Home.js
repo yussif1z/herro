@@ -28,8 +28,8 @@ export default class HotelCard extends Component {
                         pictureurl: doc.data().pictureurl,
                         latitude: doc.data().location.latitude,
                         longitude: doc.data().location.longitude
-                    });
-                });
+                    })
+                })
                 this.setState({ hotels })
             })
             .catch(function (error) {
@@ -41,10 +41,10 @@ export default class HotelCard extends Component {
         return (
             <Grid textAlign='center'>
                 <Grid.Column mobile={16} tablet={6} computer={6}>
-                    {this.state.hotels.map(hotel => {
+                    {this.state.hotels.map((hotel, index) => {
                         return (
                             <Link to={`/booking/${hotel.hotelid}`}>
-                                <Card link className='bg-transparent shadow-none' fluid>
+                                <Card key={index} link className='bg-transparent shadow-none' fluid>
                                     {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
                                     <Card.Header textAlign='left'>
                                         <h5>
