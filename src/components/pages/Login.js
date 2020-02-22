@@ -6,8 +6,11 @@ import {
     Input,
     Button,
     Form,
-    Grid
+    Grid,
+    Transition,
+    Label
 } from 'semantic-ui-react'
+import SimpleReactValidator from 'simple-react-validator'
 import firebase from '../../firebase'
 
 export default class Login extends Component {
@@ -20,6 +23,23 @@ export default class Login extends Component {
             currentUser: null,
             message: ''
         }
+
+        this.validator = new SimpleReactValidator({
+            element: message =>
+                <div>
+                    <Transition
+                        animation='shake'
+                        duration={250}
+                        transitionOnMount={true}
+                    >
+                        <Label basic color='red' pointing>{message}</Label>
+                    </Transition>
+                    <br />
+                </div>
+        })
+
+        this.onSubmit = this.onSubmit.bind(this)
+
     }
 
     componentDidMount() {
@@ -38,6 +58,7 @@ export default class Login extends Component {
     }
 
     onSubmit = e => {
+        if (this.validator.allValid()) {
         e.preventDefault()
         const { email, password } = this.state
         firebase
@@ -54,6 +75,12 @@ export default class Login extends Component {
                     message: error.message
                 })
             })
+        } else {
+            this.validator.showMessages();
+            // rerender to show messages for the first time
+            // you can use the autoForceUpdate option to do this automatically`
+            this.forceUpdate();
+          }
     }
 
     render() {
@@ -66,13 +93,13 @@ export default class Login extends Component {
                     <Grid centered>
                         <Grid.Column mobile={16} tablet={7} computer={6}>
                             <h4 className="text-center mb-4"><div>Sign in</div></h4>
-                            {message ? <p className="help is-danger">{message}</p> : null}
                             <Form onSubmit={this.onSubmit}>
                                 <Form.Field>
                                     <Input fluid iconPosition='left' placeholder='username'>
                                         <Icon name='user' />
                                         <input type="email" name='email' onChange={this.onChange} />
                                     </Input>
+                                    {this.validator.message('email', this.state.email, 'required|email')}
                                 </Form.Field>
 
                                 <Form.Field>
@@ -80,16 +107,27 @@ export default class Login extends Component {
                                         <Icon name='lock' />
                                         <input type="password" name='password' onChange={this.onChange} />
                                     </Input>
+                                    {this.validator.message('password', this.state.password, 'required')}
                                 </Form.Field>
 
-                                <div>
-                                    <Button color='yellow' animated>
-                                        <Button.Content visible>Sign in</Button.Content>
-                                        <Button.Content hidden>
-                                            <Icon name='arrow right' />
-                                        </Button.Content>
-                                    </Button>
-                                </div>
+                                {message ?
+                                    <div>
+                                        <Transition
+                                            animation='shake'
+                                            duration={250}
+                                            transitionOnMount={true}
+                                        >
+                                            <Label basic color='red'>{message}</Label>
+                                        </Transition>
+                                        <br />
+                                    </div> : null}
+
+                                <Button color='purple' animated>
+                                    <Button.Content visible>Sign in</Button.Content>
+                                    <Button.Content hidden>
+                                        <Icon name='arrow right' />
+                                    </Button.Content>
+                                </Button>
 
                             </Form>
                         </Grid.Column>
