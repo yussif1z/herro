@@ -43,6 +43,12 @@ export default class MenuBar extends Component {
                 <Menu>
 
                     <Menu.Item>
+                        <Link to='/'>
+                            <Button primary>Home</Button>
+                        </Link>
+                    </Menu.Item>
+
+                    <Menu.Item>
                         <Button onClick={this.logout}>Logout</Button>
                     </Menu.Item>
 
@@ -59,6 +65,13 @@ export default class MenuBar extends Component {
         return (
 
             <Menu>
+
+                <Menu.Item>
+                    <Link to='/'>
+                        <Button primary>Home</Button>
+                    </Link>
+                </Menu.Item>
+
                 <Menu.Item>
                     <Link to='/register'>
                         <Button primary>Sign up</Button>
@@ -70,6 +83,7 @@ export default class MenuBar extends Component {
                         <Button>Log-in</Button>
                     </Link>
                 </Menu.Item>
+
             </Menu>
 
         );
