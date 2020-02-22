@@ -108,8 +108,9 @@ export default class Register extends Component {
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={7} computer={6}>
+
               <h4 className="text-center mb-4"><div>Sign up</div></h4>
-              {message ? <p className="help is-danger">{message}</p> : null}
+
               <Form onSubmit={this.onSubmit}>
 
                 <Form.Field>
@@ -161,14 +162,24 @@ export default class Register extends Component {
                   {this.validator.message('birthday', this.state.birth && moment(this.state.birth, 'YYYY-MM-DD'), 'required|date')}
                 </Form.Field>
 
-                <div>
+                {message ?
+                  <div>
+                    <Transition
+                      animation='shake'
+                      duration={250}
+                      transitionOnMount={true}
+                    >
+                      <Label basic color='red'>{message}</Label>
+                    </Transition>
+                    <br />
+                  </div> : null}
+
                   <Button color='purple' animated>
                     <Button.Content visible>Sign up</Button.Content>
                     <Button.Content hidden>
                       <Icon name='arrow right' />
                     </Button.Content>
                   </Button>
-                </div>
 
               </Form>
             </Grid.Column>
