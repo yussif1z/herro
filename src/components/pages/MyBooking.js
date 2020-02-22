@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Card, Grid } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
 export default class MyBooking extends Component {
@@ -13,58 +12,63 @@ export default class MyBooking extends Component {
     }
 
     componentDidMount() {
-        firebase
-            .firestore()
-            .collection('hotels')
-            .get()
-            .then(querySnapshot => {
-                const hotels = []
-                querySnapshot.forEach(doc => {
-                    hotels.push({
-                        id: doc.id,
-                        name: doc.data().name,
-                        price: doc.data().price,
-                        detail: doc.data().detail,
-                        pictureurl: doc.data().pictureurl,
-                        latitude: doc.data().location.latitude,
-                        longitude: doc.data().location.longitude
-                    });
-                });
-                this.setState({ hotels })
-            })
-            .catch(function (error) {
-                console.log("Error getting documents: ", error)
-            })
+        const db = firebase.firestore()
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                db.collection('users')
+                    .doc(user.uid)
+                    .collection('mybooking')
+                    .get()
+                    .then(querySnapshot => {
+                        const hotels = []
+                        querySnapshot.forEach(doc => {
+                            db.collection('hotels')
+                                .doc(doc.data().hotelid)
+                                .get()
+                                .then(doc => {
+                                    hotels.push({
+                                        hotelid: doc.id,
+                                        name: doc.data().name,
+                                        price: doc.data().price,
+                                        detail: doc.data().detail,
+                                    })
+                                    this.setState({ hotels })
+                                })
+                        })
+                    })
+                    .catch(error => {
+                        this.setState({
+                            message: error.message
+                        })
+                    })
+            } else if (!user) {
+                this.props.history.push('/login')
+            }
+        })
     }
 
     render() {
+        const { hotels } = this.state;
+
         return (
             <Grid textAlign='center'>
                 <Grid.Column mobile={16} tablet={6} computer={6}>
-                    {this.state.hotels.map(hotel => {
+                    {hotels.map((hotel, index) => {
                         return (
-                            <Link to={`/book/${hotel.id}`}>
-                                <Card link className='bg-transparent shadow-none' fluid>
-                                    {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
-                                    <Card.Header textAlign='left'>
-                                        <h5>
-                                            {hotel.name}
-                                        </h5>
-                                    </Card.Header>
-                                    <Card.Description textAlign='left'>
-                                        {hotel.detail}
-                                    </Card.Description>
-                                    <Card.Meta textAlign='left'>
-                                        {hotel.price}
-                                    </Card.Meta>
-                                    <Card.Description textAlign='left'>
-                                        {hotel.latitude}
-                                    </Card.Description>
-                                    <Card.Description textAlign='left'>
-                                        {hotel.longitude}
-                                    </Card.Description>
-                                </Card>
-                            </Link>
+                            <Card key={index} link className='bg-transparent shadow-none' fluid>
+                                {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
+                                <Card.Header textAlign='left'>
+                                    <h5>
+                                        {hotel.name}
+                                    </h5>
+                                </Card.Header>
+                                <Card.Description textAlign='left'>
+                                    {hotel.detail}
+                                </Card.Description>
+                                <Card.Meta textAlign='left'>
+                                    {hotel.price}
+                                </Card.Meta>
+                            </Card>
                         );
                     })}
                 </Grid.Column>
