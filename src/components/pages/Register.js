@@ -6,8 +6,12 @@ import {
   Input,
   Button,
   Form,
-  Grid
+  Grid,
+  Transition,
+  Label
 } from 'semantic-ui-react'
+import moment from 'moment'
+import SimpleReactValidator from 'simple-react-validator'
 import firebase from '../../firebase'
 
 export default class Register extends Component {
@@ -23,7 +27,23 @@ export default class Register extends Component {
       birth: '',
       message: ''
     }
-    this.onSubmit = this.onSubmit.bind(this);
+
+    this.validator = new SimpleReactValidator({
+      element: message =>
+        <div>
+          <Transition
+            animation='shake'
+            duration={250}
+            transitionOnMount={true}
+          >
+            <Label basic color='red' pointing>{message}</Label>
+          </Transition>
+          <br />
+        </div>
+    })
+
+    this.onSubmit = this.onSubmit.bind(this)
+
   }
 
   componentDidMount() {
@@ -42,34 +62,41 @@ export default class Register extends Component {
   }
 
   onSubmit = e => {
-    e.preventDefault()
-    const { email, password, firstname, lastname, birth } = this.state
-    const db = firebase.firestore();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        return db.collection('users')
-          .doc(response.user.uid)
-          .set({
-            firstname: firstname,
-            lastname: lastname,
-            birth: birth
-          })
-      })
-      .then(() => {
-        firebase
-          .auth()
-          .signOut()
-          .then(() => {
-            this.props.history.push('/login')
-          })
-      })
-      .catch(error => {
-        this.setState({
-          message: error.message
+    if (this.validator.allValid()) {
+      e.preventDefault()
+      const { email, password, firstname, lastname, birth } = this.state
+      const db = firebase.firestore();
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((response) => {
+          return db.collection('users')
+            .doc(response.user.uid)
+            .set({
+              firstname: firstname,
+              lastname: lastname,
+              birth: birth
+            })
         })
-      })
+        .then(() => {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              this.props.history.push('/login')
+            })
+        })
+        .catch(error => {
+          this.setState({
+            message: error.message
+          })
+        })
+    } else {
+      this.validator.showMessages();
+      // rerender to show messages for the first time
+      // you can use the autoForceUpdate option to do this automatically`
+      this.forceUpdate();
+    }
   }
 
   render() {
@@ -81,54 +108,61 @@ export default class Register extends Component {
         <Container fluid>
           <Grid centered>
             <Grid.Column mobile={16} tablet={7} computer={6}>
-              <h4 className="text-center mb-4"><div>Sign up</div></h4> 
+              <h4 className="text-center mb-4"><div>Sign up</div></h4>
               {message ? <p className="help is-danger">{message}</p> : null}
               <Form onSubmit={this.onSubmit}>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='email'>
                     <Icon name='mail' />
-                    <input type="email" name='email' onChange={this.onChange} />
+                    <input type='email' name='email' onChange={this.onChange} />
                   </Input>
+                  {this.validator.message('email', this.state.email, 'required|email')}
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='password'>
                     <Icon name='unlock' />
-                    <input type="password" name='password' onChange={this.onChange} />
+                    <input type='password' name='password' onChange={this.onChange} />
                   </Input>
+                  {this.validator.message('password', this.state.password, 'required|alpha_num_dash|min:6,string|max:30,string')}
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='confirm password'>
                     <Icon name='unlock alternate' />
-                    <input type="password" name='confirmpassword' onChange={this.onChange} />
+                    <input type='password' name='confirmpassword' onChange={this.onChange} />
                   </Input>
+                  {this.validator.message('confirm password', this.state.confirmpassword, `required|in:${this.state.password}`, { messages: { in: 'The password need to match.' } })}
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='first name'>
                     <Icon name='vcard' />
-                    <input type="text" name='firstname' onChange={this.onChange} />
+                    <input type='text' name='firstname' onChange={this.onChange} />
                   </Input>
+                  {this.validator.message('first name', this.state.firstname, 'required|alpha')}
                 </Form.Field>
 
                 <Form.Field>
                   <Input fluid iconPosition='left' placeholder='last name'>
                     <Icon name='vcard' />
-                    <input type="text" name='lastname' onChange={this.onChange} />
+                    <input type='text' name='lastname' onChange={this.onChange} />
                   </Input>
+                  {this.validator.message('last name', this.state.lastname, 'required|alpha')}
                 </Form.Field>
 
                 <Form.Field>
-                  <Input fluid iconPosition='left' placeholder='birth'>
+                  <small><div>Birthday</div></small>
+                  <Input fluid iconPosition='left'>
                     <Icon name='calendar alternate' />
-                    <input type="text" name='birth' onChange={this.onChange} />
+                    <input type='date' name='birth' onChange={this.onChange} />
                   </Input>
+                  {this.validator.message('birthday', this.state.birth && moment(this.state.birth, 'YYYY-MM-DD'), 'required|date')}
                 </Form.Field>
 
                 <div>
-                  <Button color='yellow' animated>
+                  <Button color='purple' animated>
                     <Button.Content visible>Sign up</Button.Content>
                     <Button.Content hidden>
                       <Icon name='arrow right' />
