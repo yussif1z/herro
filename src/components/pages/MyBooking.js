@@ -21,16 +21,17 @@ export default class MyBooking extends Component {
                     .get()
                     .then(querySnapshot => {
                         const hotels = []
-                        querySnapshot.forEach(doc => {
+                        querySnapshot.forEach(userdoc => {
                             db.collection('hotels')
-                                .doc(doc.data().hotelid)
+                                .doc(userdoc.data().hotelid)
                                 .get()
-                                .then(doc => {
+                                .then(hoteldoc => {
                                     hotels.push({
-                                        hotelid: doc.id,
-                                        name: doc.data().name,
-                                        price: doc.data().price,
-                                        detail: doc.data().detail,
+                                        hotelid: hoteldoc.id,
+                                        name: hoteldoc.data().name,
+                                        price: hoteldoc.data().price,
+                                        detail: hoteldoc.data().detail,
+                                        bookingdate: userdoc.data().bookingdate
                                     })
                                     this.setState({ hotels })
                                 })
@@ -67,6 +68,9 @@ export default class MyBooking extends Component {
                                 </Card.Description>
                                 <Card.Meta textAlign='left'>
                                     {hotel.price}
+                                </Card.Meta>
+                                <Card.Meta textAlign='left'>
+                                    {hotel.bookingdate}
                                 </Card.Meta>
                             </Card>
                         );
