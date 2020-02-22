@@ -78,14 +78,6 @@ export default class Register extends Component {
               birth: birth
             })
         })
-        .then(() => {
-          firebase
-            .auth()
-            .signOut()
-            .then(() => {
-              this.props.history.push('/login')
-            })
-        })
         .catch(error => {
           this.setState({
             message: error.message
