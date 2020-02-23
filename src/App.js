@@ -10,9 +10,9 @@ import MyBooking from './components/pages/MyBooking'
 
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <MenuBar />
+    <Router>
+      <MenuBar />
+      <div className="App">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/login" component={Login} />
@@ -20,8 +20,8 @@ function App() {
           <Route exact path="/booking/:id" component={Booking} />
           <Route exact path="/mybooking" component={MyBooking} />
         </Switch>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 
