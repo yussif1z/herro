@@ -8,7 +8,7 @@ export default class MenuBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isAuth: false,
+            isAuth: null,
             name: ''
         }
     }
@@ -46,7 +46,7 @@ export default class MenuBar extends Component {
     render() {
         const { isAuth } = this.state
 
-        if (isAuth) {
+        if (isAuth === true) {
             return (
                 <Menu size='tiny'>
                     <Menu.Item href='/' link>
@@ -73,30 +73,41 @@ export default class MenuBar extends Component {
                         </Dropdown>
                     </Menu.Menu>
                 </Menu>
-            );
+            )
+        } else if (isAuth === false) {
+            return (
+                <Menu size='tiny'>
+                    <Menu.Item href='/' link>
+                        <Image src={require('../imgs/hotel.png')} size='mini' />
+                    </Menu.Item>
+                    <Menu.Item href='/' link>
+                        <Header size='small'>Discover</Header>
+                    </Menu.Item>
+                    <Menu.Menu position='right'>
+                        <Menu.Item>
+                            <Link to='/login'>
+                                <Button>Sign In</Button>
+                            </Link>
+                        </Menu.Item>
+                        <Menu.Item>
+                            <Link to='/register'>
+                                <Button primary>Create Account</Button>
+                            </Link>
+                        </Menu.Item>
+                    </Menu.Menu>
+                </Menu>
+            )
+        } else if (isAuth === null) {
+            return (
+                <Menu size='tiny'>
+                    <Menu.Item href='/' link>
+                        <Image src={require('../imgs/hotel.png')} size='mini' />
+                    </Menu.Item>
+                    <Menu.Item href='/' link>
+                        <Header size='small'>Discover</Header>
+                    </Menu.Item>
+                </Menu>
+            )
         }
-
-        return (
-            <Menu size='tiny'>
-                <Menu.Item href='/' link>
-                    <Image src={require('../imgs/hotel.png')} size='mini' />
-                </Menu.Item>
-                <Menu.Item href='/' link>
-                    <Header size='small'>Discover</Header>
-                </Menu.Item>
-                <Menu.Menu position='right'>
-                    <Menu.Item>
-                        <Link to='/login'>
-                            <Button>Sign In</Button>
-                        </Link>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <Link to='/register'>
-                            <Button primary>Create Account</Button>
-                        </Link>
-                    </Menu.Item>
-                </Menu.Menu>
-            </Menu>
-        );
     }
 }
