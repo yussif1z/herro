@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import styles from './mapStyles';
-import Marker from './Marker';
+import React, { Component } from 'react'
+import GoogleMapReact from 'google-map-react'
+import styles from './mapStyles'
+import Marker from './Marker'
 
 class MapContainer extends Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             location: {
                 lat: 13.7563,
@@ -14,7 +14,7 @@ class MapContainer extends Component {
             },
             zoom: 16
         }
-    };
+    }
 
     render() {
         return (
@@ -37,7 +37,7 @@ class MapContainer extends Component {
                     </GoogleMapReact>
                 </div>
             </div>
-        );
+        )
     }
 
 }

@@ -210,6 +210,6 @@ export default class Booking extends Component {
                 </Modal>
 
             </Grid>
-        );
+        )
     }
 }
