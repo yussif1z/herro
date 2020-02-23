@@ -85,10 +85,10 @@ export default class Register extends Component {
           })
         })
     } else {
-      this.validator.showMessages();
+      this.validator.showMessages()
       // rerender to show messages for the first time
       // you can use the autoForceUpdate option to do this automatically`
-      this.forceUpdate();
+      this.forceUpdate()
     }
   }
 
@@ -179,6 +179,6 @@ export default class Register extends Component {
           </Grid>
         </Container>
       </Responsive>
-    );
+    )
   }
 }

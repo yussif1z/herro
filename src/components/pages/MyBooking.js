@@ -48,7 +48,7 @@ export default class MyBooking extends Component {
     }
 
     render() {
-        const { hotels } = this.state;
+        const { hotels } = this.state
 
         return (
             <Grid textAlign='center'>
