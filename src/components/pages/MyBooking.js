@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Card, Grid } from 'semantic-ui-react'
+import { Card, Grid, Icon } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
 export default class MyBooking extends Component {
@@ -29,8 +30,6 @@ export default class MyBooking extends Component {
                                     hotels.push({
                                         hotelid: hoteldoc.id,
                                         name: hoteldoc.data().name,
-                                        price: hoteldoc.data().price,
-                                        detail: hoteldoc.data().detail,
                                         bookingdate: userdoc.data().bookingdate
                                     })
                                     this.setState({ hotels })
@@ -56,27 +55,25 @@ export default class MyBooking extends Component {
                 <Grid.Column mobile={16} tablet={6} computer={6}>
                     {hotels.map((hotel, index) => {
                         return (
-                            <Card key={index} link className='bg-transparent shadow-none' fluid>
-                                {/* <Image src={require(hotel.pictureurl)} circular wrapped /> */}
-                                <Card.Header textAlign='left'>
-                                    <h5>
-                                        {hotel.name}
-                                    </h5>
-                                </Card.Header>
-                                <Card.Description textAlign='left'>
-                                    {hotel.detail}
-                                </Card.Description>
-                                <Card.Meta textAlign='left'>
-                                    {hotel.price}
-                                </Card.Meta>
-                                <Card.Meta textAlign='left'>
-                                    {hotel.bookingdate}
-                                </Card.Meta>
-                            </Card>
-                        );
+                            <div key={index}>
+                                <Link to={`/booking/${hotel.hotelid}`}>
+                                    <Card link className='margin-bottom' fluid>
+                                        <Card.Content>
+                                            <Card.Description as='h4' textAlign='left'>
+                                                {hotel.name}
+                                            </Card.Description>
+                                        </Card.Content>
+                                        <Card.Content as='h6' textAlign='left' extra>
+                                            <Icon name='calendar check' />
+                                            {hotel.bookingdate}
+                                        </Card.Content>
+                                    </Card>
+                                </Link>
+                            </div>
+                        )
                     })}
                 </Grid.Column>
             </Grid>
-        );
+        )
     }
 }
