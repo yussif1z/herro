@@ -79,13 +79,6 @@ export default class Booking extends Component {
                         .catch(function (error) {
                             console.log("Error getting documents: ", error)
                         })
-                    // this.setState({
-                    //     hotelid: doc.id,
-                    //     name: doc.data().name,
-                    //     price: doc.data().price,
-                    //     detail: doc.data().detail,
-                    //     location: doc.data().location
-                    // })
                 }
             })
             .catch(err => {
@@ -155,25 +148,34 @@ export default class Booking extends Component {
             <Grid centered>
                 <Grid.Column mobile={15} tablet={9} computer={9}>
                     <Card fluid>
-                        <Image src={this.state.pictureurl} circular wrapped />
-                        <Card.Header textAlign='center'>
-                            {this.state.name}
-                        </Card.Header>
-                        <Card.Description textAlign='center'>
-                            {this.state.price}
-                        </Card.Description>
-                        <Card.Description textAlign='center'>
-                            {this.state.detail}
-                        </Card.Description>
-                        <Card.Content textAlign='right' extra>
-                            <Button onClick={this.handleOpenModal} basic color='green'>
-                                Booking
+                        <Image src={this.state.pictureurl} wrapped />
+                        <Card.Content>
+                            <Card.Header textAlign='center'>
+                                {this.state.name}
+                            </Card.Header>
+                            <Card.Description textAlign='left'>
+                                {this.state.detail}
+                            </Card.Description>
+                        </Card.Content>
+                        <Card.Content as='h6' textAlign='left'>
+                            <Icon name='tag' />
+                            {this.state.price} THB / DAY
+                            <Button onClick={this.handleOpenModal} floated='right' color='green'  animated>
+                                <Button.Content visible>Start booking</Button.Content>
+                                <Button.Content hidden>
+                                    <Icon name='paper plane right' />
+                                </Button.Content>
                             </Button>
                         </Card.Content>
                     </Card>
                 </Grid.Column>
                 <Grid.Column mobile={15} tablet={7} computer={7}>
                     <Card fluid>
+                        <Card.Content textAlign='left'>
+                            <Card.Header>
+                                Location
+                            </Card.Header>
+                        </Card.Content>
                         <Card.Content textAlign='center'>
                             <MapContainer
                                 location={this.state.location}

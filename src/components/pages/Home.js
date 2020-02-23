@@ -59,7 +59,7 @@ export default class HotelCard extends Component {
                                             <Card.Header as='h3' textAlign='left'>
                                                 {hotel.name}
                                             </Card.Header>
-                                            <Card.Description as='h5' textAlign='left'>
+                                            <Card.Description textAlign='left'>
                                                 {hotel.detail}
                                             </Card.Description>
                                         </Card.Content>
