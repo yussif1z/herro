@@ -8,7 +8,8 @@ import {
   Form,
   Grid,
   Transition,
-  Label
+  Label,
+  Header
 } from 'semantic-ui-react'
 import moment from 'moment'
 import SimpleReactValidator from 'simple-react-validator'
@@ -101,7 +102,7 @@ export default class Register extends Component {
           <Grid centered>
             <Grid.Column mobile={16} tablet={7} computer={6}>
 
-              <h4 className="text-center mb-4"><div>Sign up</div></h4>
+              <Header as='h3' textAlign='center'>Create Account</Header>
 
               <Form onSubmit={this.onSubmit}>
 
@@ -166,7 +167,7 @@ export default class Register extends Component {
                     <br />
                   </div> : null}
 
-                  <Button color='purple' animated>
+                  <Button floated='right' color='purple' animated>
                     <Button.Content visible>Sign up</Button.Content>
                     <Button.Content hidden>
                       <Icon name='arrow right' />
