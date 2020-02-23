@@ -7,6 +7,12 @@
 
 .App {
   text-align: center;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.margin-bottom {
+  margin-bottom: 18px !important;
 }
 
 .App-logo {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Grid, Image } from 'semantic-ui-react'
+import { Card, Grid, Image, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
@@ -31,8 +31,6 @@ export default class HotelCard extends Component {
                                 price: doc.data().price,
                                 detail: doc.data().detail,
                                 pictureurl: downloadURL,
-                                latitude: doc.data().location.latitude,
-                                longitude: doc.data().location.longitude
                             })
                             this.setState({ hotels })
                         })
@@ -50,37 +48,32 @@ export default class HotelCard extends Component {
     render() {
         return (
             <Grid textAlign='center'>
-                <Grid.Column mobile={16} tablet={6} computer={6}>
+                <Grid.Column mobile={16} tablet={7} computer={7}>
                     {this.state.hotels.map((hotel, index) => {
                         return (
                             <div key={index}>
                                 <Link to={`/booking/${hotel.hotelid}`}>
-                                    <Card link className='bg-transparent shadow-none' fluid>
-                                        <Image src={hotel.pictureurl} circular wrapped />
-                                        <Card.Header textAlign='left'>
-                                            <h5>
+                                    <Card link className='margin-bottom' fluid>
+                                        <Image src={hotel.pictureurl} wrapped />
+                                        <Card.Content>
+                                            <Card.Header as='h3' textAlign='left'>
                                                 {hotel.name}
-                                            </h5>
-                                        </Card.Header>
-                                        <Card.Description textAlign='left'>
-                                            {hotel.detail}
-                                        </Card.Description>
-                                        <Card.Meta textAlign='left'>
-                                            {hotel.price}
-                                        </Card.Meta>
-                                        <Card.Description textAlign='left'>
-                                            {hotel.latitude}
-                                        </Card.Description>
-                                        <Card.Description textAlign='left'>
-                                            {hotel.longitude}
-                                        </Card.Description>
+                                            </Card.Header>
+                                            <Card.Description as='h5' textAlign='left'>
+                                                {hotel.detail}
+                                            </Card.Description>
+                                        </Card.Content>
+                                        <Card.Content as='h6' textAlign='left' extra>
+                                            <Icon name='tag' />
+                                            {hotel.price} THB
+                                        </Card.Content>
                                     </Card>
                                 </Link>
                             </div>
-                        );
+                        )
                     })}
                 </Grid.Column>
             </Grid>
-        );
+        )
     }
 }
