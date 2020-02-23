@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Menu, Image, Header, Dropdown, Icon } from 'semantic-ui-react'
+import { Button, Menu, Image, Header, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
