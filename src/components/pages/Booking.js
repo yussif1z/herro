@@ -108,7 +108,6 @@ export default class Booking extends Component {
     }
 
     onSubmit = e => {
-        console.log(this.state.bookingdate)
         e.preventDefault()
         const { hotelid, bookingdate } = this.state
         const db = firebase.firestore()
@@ -153,6 +152,8 @@ export default class Booking extends Component {
                             <Card.Header textAlign='center'>
                                 {this.state.name}
                             </Card.Header>
+                        </Card.Content>
+                        <Card.Content>
                             <Card.Description textAlign='left'>
                                 {this.state.detail}
                             </Card.Description>
@@ -160,7 +161,7 @@ export default class Booking extends Component {
                         <Card.Content as='h6' textAlign='left'>
                             <Icon name='tag' />
                             {this.state.price} THB / DAY
-                            <Button onClick={this.handleOpenModal} floated='right' color='green'  animated>
+                            <Button onClick={this.handleOpenModal} floated='right' color='green' animated>
                                 <Button.Content visible>Start booking</Button.Content>
                                 <Button.Content hidden>
                                     <Icon name='paper plane right' />
@@ -196,13 +197,13 @@ export default class Booking extends Component {
                             <Icon name='calendar alternate' />
                             <input type='date' name='bookingdate' onChange={this.onChange} />
                         </Input>
-                        {this.validator.message('date', this.state.bookingdate && moment(this.state.bookingdate, 'YYYY-MM-DD'), 'required|date')}
+                        {this.validator.message('booking date', this.state.bookingdate && moment(this.state.bookingdate, 'YYYY-MM-DD'), 'required|date')}
                     </Modal.Content>
                     <Modal.Actions>
                         <Button basic onClick={this.handleCloseModal}>
                             Cancel
                             </Button>
-                        <Button onClick={this.onSubmit}>
+                        <Button color='green' onClick={this.onSubmit}>
                             <Icon name='checkmark' /> Confirm
                             </Button>
                     </Modal.Actions>
