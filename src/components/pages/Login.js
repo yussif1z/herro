@@ -8,7 +8,8 @@ import {
     Form,
     Grid,
     Transition,
-    Label
+    Label,
+    Header
 } from 'semantic-ui-react'
 import SimpleReactValidator from 'simple-react-validator'
 import firebase from '../../firebase'
@@ -59,28 +60,28 @@ export default class Login extends Component {
 
     onSubmit = e => {
         if (this.validator.allValid()) {
-        e.preventDefault()
-        const { email, password } = this.state
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then(response => {
-                this.setState({
-                    currentUser: response.user
+            e.preventDefault()
+            const { email, password } = this.state
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then(response => {
+                    this.setState({
+                        currentUser: response.user
+                    })
+                    this.props.history.push('/')
                 })
-                this.props.history.push('/')
-            })
-            .catch(error => {
-                this.setState({
-                    message: error.message
+                .catch(error => {
+                    this.setState({
+                        message: error.message
+                    })
                 })
-            })
         } else {
             this.validator.showMessages();
             // rerender to show messages for the first time
             // you can use the autoForceUpdate option to do this automatically`
             this.forceUpdate();
-          }
+        }
     }
 
     render() {
@@ -92,7 +93,7 @@ export default class Login extends Component {
                 <Container fluid>
                     <Grid centered>
                         <Grid.Column mobile={16} tablet={7} computer={6}>
-                            <h4 className="text-center mb-4"><div>Sign in</div></h4>
+                            <Header as='h3' textAlign='center'>Sign in</Header>
                             <Form onSubmit={this.onSubmit}>
                                 <Form.Field>
                                     <Input fluid iconPosition='left' placeholder='username'>
@@ -122,10 +123,10 @@ export default class Login extends Component {
                                         <br />
                                     </div> : null}
 
-                                <Button color='purple' animated>
+                                <Button floated='right' color='green' animated>
                                     <Button.Content visible>Sign in</Button.Content>
                                     <Button.Content hidden>
-                                        <Icon name='arrow right' />
+                                        <Icon name='unlock right' />
                                     </Button.Content>
                                 </Button>
 
