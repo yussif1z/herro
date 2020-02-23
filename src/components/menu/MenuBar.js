@@ -68,6 +68,7 @@ export default class MenuBar extends Component {
                             header
                         >
                             <Dropdown.Menu>
+                                <Dropdown.Item icon='user' text='Profile' href='/profile' />
                                 <Dropdown.Item icon='sign-out' text='Sign out' onClick={this.logout} />
                             </Dropdown.Menu>
                         </Dropdown>
