@@ -62,7 +62,7 @@ export default class MenuBar extends Component {
                         <Dropdown
                             className='icon'
                             text={
-                                <Header size='small'>{`${this.state.name}` + `'s`}</Header>
+                                <Header size='small'>{`${this.state.name}'s`}</Header>
                             }
                             item
                             header
