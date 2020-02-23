@@ -167,7 +167,7 @@ export default class Register extends Component {
                     <br />
                   </div> : null}
 
-                  <Button floated='right' color='purple' animated>
+                  <Button floated='right' color='green' animated>
                     <Button.Content visible>Sign up</Button.Content>
                     <Button.Content hidden>
                       <Icon name='arrow right' />
