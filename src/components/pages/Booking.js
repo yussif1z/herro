@@ -174,7 +174,7 @@ export default class Booking extends Component {
                     <Card fluid>
                         <Card.Content textAlign='left'>
                             <Card.Header>
-                            <Icon name='map pin' />
+                                <Icon name='map pin' />
                                 Location
                             </Card.Header>
                         </Card.Content>
@@ -198,7 +198,11 @@ export default class Booking extends Component {
                             <Icon name='calendar alternate' />
                             <input type='date' name='bookingdate' onChange={this.onChange} />
                         </Input>
-                        {this.validator.message('booking date', this.state.bookingdate && moment(this.state.bookingdate, 'YYYY-MM-DD'), 'required|date')}
+                        {this.validator.message(
+                            'booking date',
+                            this.state.bookingdate && moment(this.state.bookingdate, 'YYYY-MM-DD'),
+                            ['required', { after: moment().add(-1, 'day') }]
+                        )}
                     </Modal.Content>
                     <Modal.Actions>
                         <Button basic onClick={this.handleCloseModal}>
