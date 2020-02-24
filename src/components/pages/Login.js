@@ -123,10 +123,10 @@ export default class Login extends Component {
                                         <br />
                                     </div> : null}
 
-                                <Button floated='right' color='green' animated>
+                                <Button floated='right' color='green' animated='fade'>
                                     <Button.Content visible>Sign in</Button.Content>
                                     <Button.Content hidden>
-                                        <Icon name='unlock right' />
+                                        <Icon name='unlock' />
                                     </Button.Content>
                                 </Button>
 

@@ -174,6 +174,7 @@ export default class Booking extends Component {
                     <Card fluid>
                         <Card.Content textAlign='left'>
                             <Card.Header>
+                            <Icon name='map pin' />
                                 Location
                             </Card.Header>
                         </Card.Content>

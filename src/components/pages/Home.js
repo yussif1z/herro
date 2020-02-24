@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Grid, Image, Icon } from 'semantic-ui-react'
+import { Card, Grid, Image, Icon, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
@@ -66,6 +66,8 @@ export default class HotelCard extends Component {
                                         <Card.Content as='h6' textAlign='left' extra>
                                             <Icon name='tag' />
                                             {hotel.price} THB
+                                            <Button floated='right' size='mini' compact basic disabled>See more<Icon name='angle right' /></Button>
+
                                         </Card.Content>
                                     </Card>
                                 </Link>

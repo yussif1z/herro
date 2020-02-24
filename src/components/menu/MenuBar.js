@@ -87,12 +87,12 @@ export default class MenuBar extends Component {
                     <Menu.Menu position='right'>
                         <Menu.Item>
                             <Link to='/login'>
-                                <Button>Sign In</Button>
+                                <Button size='small'>Sign In</Button>
                             </Link>
                         </Menu.Item>
                         <Menu.Item>
                             <Link to='/register'>
-                                <Button primary>Create Account</Button>
+                                <Button size='small' primary>Create Account</Button>
                             </Link>
                         </Menu.Item>
                     </Menu.Menu>
