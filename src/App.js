@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import './App.css'
 import MenuBar from './components/menu/MenuBar'
 import Home from './components/pages/Home'
@@ -21,10 +21,13 @@ function App() {
           <Route exact path="/booking/:id" component={Booking} />
           <Route exact path="/mybooking" component={MyBooking} />
           <Route exact path="/profile" component={Profile} />
+          <Route exact path="*">
+            <Redirect to="/" />
+          </Route>
         </Switch>
       </div>
     </Router>
-  );
+  )
 }
 
 export default App

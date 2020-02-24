@@ -49,7 +49,9 @@ export default class HotelCard extends Component {
         return (
             <Grid textAlign='center'>
                 <Grid.Column mobile={16} tablet={7} computer={7}>
-                    {this.state.hotels.map((hotel, index) => {
+                    {this.state.hotels
+                    .sort((a, b) => a.price > b.price)
+                    .map((hotel, index) => {
                         return (
                             <div key={index}>
                                 <Link to={`/booking/${hotel.hotelid}`}>
