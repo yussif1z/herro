@@ -53,7 +53,9 @@ export default class MyBooking extends Component {
         return (
             <Grid textAlign='center'>
                 <Grid.Column mobile={16} tablet={6} computer={6}>
-                    {hotels.map((hotel, index) => {
+                    {hotels
+                    .sort((a, b) => a.bookingdate > b.bookingdate)
+                    .map((hotel, index) => {
                         return (
                             <div key={index}>
                                 <Link to={`/booking/${hotel.hotelid}`}>
