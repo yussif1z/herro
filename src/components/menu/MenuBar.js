@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Menu, Image, Header, Dropdown } from 'semantic-ui-react'
+import { Button, Menu, Image, Header, Dropdown, Loader } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import firebase from '../../firebase'
 
@@ -100,12 +100,13 @@ export default class MenuBar extends Component {
             )
         } else if (isAuth === null) {
             return (
-                <Menu size='tiny'>
-                    <Menu.Item href='/' link>
+                <Menu size='tiny' borderless>
+                    <Menu.Item>
                         <Image src={require('../imgs/hotel.png')} size='mini' />
                     </Menu.Item>
-                    <Menu.Item href='/' link>
-                        <Header size='small'>Discover</Header>
+                    <Menu.Item active>
+                        <Loader active inline size='small' />
+                        &nbsp;&nbsp;Please wait..
                     </Menu.Item>
                 </Menu>
             )
