@@ -155,8 +155,8 @@ export default class Register extends Component {
                   {this.validator.message(
                     'birthday',
                     this.state.birth && moment(this.state.birth, 'YYYY-MM-DD'),
-                    ['required', { before: moment().add(-18, 'year') }],
-                    { messages: { before: 'You must be at least 18 years old.' } }
+                    ['required', { before_or_equal: moment().add(-18, 'year') }],
+                    { messages: { before_or_equal: 'You must be at least 18 years old.' } }
                   )}
                 </Form.Field>
 

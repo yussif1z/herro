@@ -201,7 +201,7 @@ export default class Booking extends Component {
                         {this.validator.message(
                             'booking date',
                             this.state.bookingdate && moment(this.state.bookingdate, 'YYYY-MM-DD'),
-                            ['required', { after: moment().add(-1, 'day') }]
+                            ['required', { after_or_equal: moment() }]
                         )}
                     </Modal.Content>
                     <Modal.Actions>
