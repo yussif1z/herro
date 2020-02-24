@@ -152,7 +152,12 @@ export default class Register extends Component {
                     <Icon name='calendar alternate' />
                     <input type='date' name='birth' onChange={this.onChange} />
                   </Input>
-                  {this.validator.message('birthday', this.state.birth && moment(this.state.birth, 'YYYY-MM-DD'), 'required|date')}
+                  {this.validator.message(
+                    'birthday',
+                    this.state.birth && moment(this.state.birth, 'YYYY-MM-DD'),
+                    ['required', { before: moment().add(-18, 'year') }],
+                    { messages: { before: 'You must be at least 18 years old.' } }
+                  )}
                 </Form.Field>
 
                 {message ?
@@ -167,12 +172,12 @@ export default class Register extends Component {
                     <br />
                   </div> : null}
 
-                  <Button floated='right' color='green' animated>
-                    <Button.Content visible>Sign up</Button.Content>
-                    <Button.Content hidden>
-                      <Icon name='arrow right' />
-                    </Button.Content>
-                  </Button>
+                <Button floated='right' color='green' animated>
+                  <Button.Content visible>Sign up</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name='arrow right' />
+                  </Button.Content>
+                </Button>
 
               </Form>
             </Grid.Column>
